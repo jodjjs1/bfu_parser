@@ -18,7 +18,7 @@ konkurs = requests.get(URL).json()
 URL_ALL = 'https://abitstat.kantiana.ru/api/applicants/get/'
 all_abits = requests.get(URL_ALL).json()
 
-my_snils = '147-239-275 77'
+my_snils = ''
 
 napravleniya = []
 
