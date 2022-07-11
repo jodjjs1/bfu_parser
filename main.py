@@ -19,7 +19,6 @@ def index():
         snils = form.snils.data
         res = redirect(url_for('your_place'))
         res.set_cookie('snils', snils, max_age=60*60*24*7*4)
-        print(snils)
         return res
 
     return render_template('test_template.html', form=form)

@@ -5,11 +5,11 @@ import requests
 class Napravleniya():
 
     def __init__(self):
-        self.URL = 'https://abitstat.kantiana.ru/static/rating_bak.json'
-        self.konkurs = requests.get(self.URL).json()
+        self.__URL = 'https://abitstat.kantiana.ru/static/rating_bak.json'
+        self.konkurs = requests.get(self.__URL).json()
 
-        self.URL_ALL = 'https://abitstat.kantiana.ru/api/applicants/get/'
-        self.all_abits = requests.get(self.URL_ALL).json()
+        self.__URL_ALL = 'https://abitstat.kantiana.ru/api/applicants/get/'
+        self.all_abits = requests.get(self.__URL_ALL).json()
 
         self.snils = ''
 
@@ -27,8 +27,7 @@ class Napravleniya():
             if count == 11:
                 right_snils += ' '
                 count += 1
-        print(right_snils)
-
+        
         self.snils = right_snils
 
     # ------ GETTERS ------
@@ -45,13 +44,12 @@ class Napravleniya():
         for napr in self.konkurs:
             napr_name = napr['Napravlenie'][8:]
             napr_id = napr['Napravlenie'][:8]
-            if napr_name[:8] in napravleniya:
+            if napr_id in napravleniya:
                 abits = self.__clear_abits(napr['Abits'])
                 for abit in range(len(abits)):
                     if abits[abit]['Snils'] == self.snils:
                         abit_mesto = abit + 1
                         mesta.append({'napr_id': napr_id, 'napr_name': napr_name, 'abit_mesto': abit_mesto})
-
         return mesta
 
     # ---- PRIVAT FUCTIONS ----
