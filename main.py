@@ -3,7 +3,7 @@ from flask import request
 
 from forms import SnilsForm
 
-from get_mesto import GetMesto
+from get_mesto import Napravleniya
 
 from variables import secret_key
 
@@ -28,7 +28,7 @@ def index():
 @app.route('/your_place/')
 def your_place():
     snils = request.cookies.get('snils')
-    mesto_obj = GetMesto('')
+    mesto_obj = Napravleniya()
     mesto_obj.set_snils(snils)
     mesta = mesto_obj.get_mesto()
 

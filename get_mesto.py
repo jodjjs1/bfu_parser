@@ -2,9 +2,9 @@ import requests
 
 # https://abitstat.kantiana.ru/static/rating_bak.json
 # https://abitstat.kantiana.ru/api/applicants/get/
-class GetMesto():
+class Napravleniya():
 
-    def __init__(self, snils:str) -> None:
+    def __init__(self):
         self.URL = 'https://abitstat.kantiana.ru/static/rating_bak.json'
         self.konkurs = requests.get(self.URL).json()
 
