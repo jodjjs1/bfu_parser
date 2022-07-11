@@ -1,26 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ваше место</title>
-</head>
-<body>
-    <div align=center>
-        <table border=1>
-            {% for napr in mesta %}
-    
-                <tr><td>{{ napr.napr_name }}</td><td>{{ napr.abit_mesto }}</td></tr>
-    
-            {% endfor %}
-    
-        </table>
-        <a href="{{ url_for('index') }}">Go Back</a>
-    </div>
-    
+{% extends 'base.html' %}
 
+{% block title %}Ваше место{% endblock title %}
 
-    
-</body>
-</html>
+{% block content %}
+<div align=center>
+    <table border=1>
+        {% for napr in mesta %}
+
+            <tr><td>{{ napr.napr_name }}</td><td>{{ napr.abit_mesto }}</td></tr>
+
+        {% endfor %}
+
+    </table>
+    <a href="{{ url_for('index') }}">Go Back</a>
+</div>
+{% endblock content %}
