@@ -5,9 +5,11 @@ from forms import SnilsForm
 
 from get_mesto import GetMesto
 
+from variables import secret_key
+
 app = Flask(__name__)
 app.debug = True
-app.config['SECRET_KEY'] = ''
+app.config['SECRET_KEY'] = secret_key # секрктный код в переменной окружения
 
 @app.route('/', methods=['get', 'post'])
 def index():
@@ -31,6 +33,10 @@ def your_place():
     mesta = mesto_obj.get_mesto()
 
     return render_template('mesta.html', mesta=mesta)
+
+@app.route('/napr/<napr_id>')
+def napravlenie(napr_id):
+    return 'napravlenie'
 
 if __name__ == "__main__":
     app.run()
