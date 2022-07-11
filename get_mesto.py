@@ -2,36 +2,58 @@ import requests
 
 # https://abitstat.kantiana.ru/static/rating_bak.json
 # https://abitstat.kantiana.ru/api/applicants/get/
+class GetMesto():
 
-def clear_abits(abits):
-    clear_data = []
-    for i in range(len(abits)-1):
-        if abits[i]['Finansirovanie'] == 'Бюджетная основа':
-            clear_data.append(abits[i])
+    def __init__(self, snils:str) -> None:
+        self.URL = 'https://abitstat.kantiana.ru/static/rating_bak.json'
+        self.konkurs = requests.get(self.URL).json()
 
-    return clear_data
+        self.URL_ALL = 'https://abitstat.kantiana.ru/api/applicants/get/'
+        self.all_abits = requests.get(self.URL_ALL).json()
 
-URL = 'https://abitstat.kantiana.ru/static/rating_bak.json'
-konkurs = requests.get(URL).json()
+        self.snils = ''
 
-URL_ALL = 'https://abitstat.kantiana.ru/api/applicants/get/'
-all_abits = requests.get(URL_ALL).json()
+    def set_snils(self, snils):
+        right_snils = ''
+        count = 0
+        for i in snils:
+            count += 1
+            if i != '-' and i != ' ':
+                right_snils += i
+            if count == 3 or count == 6:
+                right_snils += '-'
+            if count == 9:
+                right_snils += ' '
+        print(right_snils)
 
-my_snils = ''
+        self.snils = right_snils
 
-napravleniya = []
+    def clear_abits(self, abits):
+        clear_data = []
+        for i in range(len(abits)-1):
+            if abits[i]['Finansirovanie'] == 'Бюджетная основа':
+                clear_data.append(abits[i])
 
-for abit in all_abits:
-    if abit['FIO'] == my_snils:
-        number_of_napr = abit['Napravlenie'][:8]
-        napravleniya.append(number_of_napr)
+        return clear_data
 
-with open('abit_names.txt', 'w') as f:
-    for napr in konkurs:
-        napr_name = napr['Napravlenie']
-        if napr_name[:8] in napravleniya:
-            abits = clear_abits(napr['Abits'])
-            for abit in range(len(abits)):
-                if abits[abit]['Snils'] == my_snils:
-                    abit_mesto = abit + 1
-                    print(napr_name, abit_mesto, file=f)
+    def get_mesto(self):
+
+        napravleniya = []
+        mesta = []
+
+        for abit in self.all_abits:
+            if abit['FIO'] == self.snils:
+                number_of_napr = abit['Napravlenie'][:8]
+                napravleniya.append(number_of_napr)
+
+        for napr in self.konkurs:
+            napr_name = napr['Napravlenie'][8:]
+            napr_id = napr['Napravlenie'][:8]
+            if napr_name[:8] in napravleniya:
+                abits = self.clear_abits(napr['Abits'])
+                for abit in range(len(abits)):
+                    if abits[abit]['Snils'] == self.snils:
+                        abit_mesto = abit + 1
+                        mesta.append({'napr_id': napr_id, 'napr_name': napr_name, 'abit_mesto': abit_mesto})
+
+        return mesta
