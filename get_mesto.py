@@ -13,29 +13,25 @@ class Napravleniya():
 
         self.snils = ''
 
+    # ------ SETTERS ------
     def set_snils(self, snils):
         right_snils = ''
         count = 0
         for i in snils:
-            count += 1
-            if i != '-' and i != ' ':
+            if self.__is_int_in_str(i):
                 right_snils += i
-            if count == 3 or count == 6:
+                count += 1
+            if count == 3 or count == 7:
                 right_snils += '-'
-            if count == 9:
+                count += 1
+            if count == 11:
                 right_snils += ' '
+                count += 1
         print(right_snils)
 
         self.snils = right_snils
 
-    def clear_abits(self, abits):
-        clear_data = []
-        for i in range(len(abits)-1):
-            if abits[i]['Finansirovanie'] == 'Бюджетная основа':
-                clear_data.append(abits[i])
-
-        return clear_data
-
+    # ------ GETTERS ------
     def get_mesto(self):
 
         napravleniya = []
@@ -50,10 +46,26 @@ class Napravleniya():
             napr_name = napr['Napravlenie'][8:]
             napr_id = napr['Napravlenie'][:8]
             if napr_name[:8] in napravleniya:
-                abits = self.clear_abits(napr['Abits'])
+                abits = self.__clear_abits(napr['Abits'])
                 for abit in range(len(abits)):
                     if abits[abit]['Snils'] == self.snils:
                         abit_mesto = abit + 1
                         mesta.append({'napr_id': napr_id, 'napr_name': napr_name, 'abit_mesto': abit_mesto})
 
         return mesta
+
+    # ---- PRIVAT FUCTIONS ----
+    def __clear_abits(self, abits):
+            clear_data = []
+            for i in range(len(abits)-1):
+                if abits[i]['Finansirovanie'] == 'Бюджетная основа':
+                    clear_data.append(abits[i])
+
+            return clear_data
+
+    def __is_int_in_str(self, n:str):
+        numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        if n in numbers:
+            return True
+        else:
+            return False
