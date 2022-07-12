@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title%}Enter your snils{% endblock %}
+
+{% block content%}
+  <div class="form">
+    <h2 align="center">Enter your snils</h2>
+
+    <form action="" align=center method="post">
+      {{ form.csrf_token() }}
+  
+  
+      {{ form.snils() }}
+      
+      {% for err in form.snils.errors %}
+          {{ err }}
+      {% endfor %}
+  
+      <input class="btn btn-outline-primary" type="submit" value="Искать">
+      
+    </form>
+  </div>
+  
+  
+{% endblock %}

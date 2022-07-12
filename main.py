@@ -21,7 +21,7 @@ def index():
         res.set_cookie('snils', snils, max_age=60*60*24*7*4)
         return res
 
-    return render_template('test_template.html', form=form)
+    return render_template('main_page.html', form=form)
 
 
 @app.route('/your_place/')
