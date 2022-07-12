@@ -2,16 +2,34 @@
 
 {% block title %}Ваше место{% endblock title %}
 
+{% block head %}
+
+
+{% endblock head %}
+
 {% block content %}
-<div align=center>
-    <table border=1>
-        {% for napr in mesta %}
+<div class=data>
 
-            <tr><td>{{ napr.napr_name }}</td><td>{{ napr.abit_mesto }}</td></tr>
-
-        {% endfor %}
-
-    </table>
-    <a href="{{ url_for('index') }}">Go Back</a>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Номер</th>
+        <th scope="col">Название специальности</th>
+        <th scope="col">Место</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+    {% for napr in mesta %}
+      <tr>
+        <th scope="row">{{napr.napr_id}}</th>
+        <td>{{ napr.napr_name }}</td>
+        <td>{{ napr.abit_mesto }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <a href="{{ url_for('index') }}">Go Back</a>
 </div>
+
 {% endblock content %}
