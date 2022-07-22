@@ -1,6 +1,7 @@
+from importlib.resources import path
 import requests
 import json
-
+from pathlib import Path
 # https://abitstat.kantiana.ru/static/rating_bak.json
 # https://abitstat.kantiana.ru/api/applicants/get/
 
@@ -88,11 +89,13 @@ class Napravleniya():
             return False
 
     def __make_cache(self, data, name:str):
-        with open(f'.cache/{name}.json', 'w') as cache_file:
+        path = Path('cache', f'{name}.json')
+        with open(path, 'w') as cache_file:
             json.dump(data, cache_file)
         
 
     def __read_cache(self, name:str) -> dict:
-        with open(f'.cache/{name}.json') as cache_file:
+        path = Path('cache', f'{name}.json')
+        with open(path) as cache_file:
             cache = json.load(cache_file)
         return cache
