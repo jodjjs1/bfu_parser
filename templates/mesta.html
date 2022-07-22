@@ -22,7 +22,7 @@
     {% for napr in mesta %}
       <tr>
         <th scope="row">{{napr.napr_id}}</th>
-        <td>{{ napr.napr_name }}</td>
+        <td><a href="{{ url_for('napravlenie', napr_id=napr.napr_id) }}">{{ napr.napr_name }}</a></td>
         <td>{{ napr.abit_mesto }}</td>
       </tr>
     {% endfor %}

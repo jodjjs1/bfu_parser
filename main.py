@@ -35,7 +35,8 @@ def your_place():
 
 @app.route('/napr/<napr_id>')
 def napravlenie(napr_id):
-    return 'napravlenie'
+    napr = {'napr_id': napr_id, 'napr_name': 'alslslsl'}
+    return render_template('napr.html', napr=napr)
 
 if __name__ == "__main__":
     app.run()
