@@ -66,10 +66,19 @@ class Napravleniya():
                 for abit in range(len(abits)):
                     if abits[abit]['Snils'] == self.snils:
                         abit_mesto = abit + 1
-                        mesta.append({'napr_id': napr_id, 'napr_name': napr_name, 'abit_mesto': abit_mesto, 'sogl_num': sogl_num})
+                        mesta.append({'napr_id': napr_id, 
+                        'napr_name': napr_name, 
+                        'abit_mesto': abit_mesto, 
+                        'sogl_num': sogl_num,
+                        'your_sogl': abits[abit]['Soglasie']})
         return mesta
 
     # ---- PRIVAT FUCTIONS ----
+    # def __is_your_sogl(self, napr:dict) -> bool:
+    #     if 
+
+
+
     def __get_sogl_num(self, napr_id_fc:str) -> int:
         count = 0
         for napr in self.konkurs:

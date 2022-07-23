@@ -21,7 +21,11 @@
     <tbody>
       
     {% for napr in mesta %}
+      {% if napr.your_sogl %}
+      <tr class="table-primary">
+      {% else %}
       <tr>
+      {% endif %}
         <th scope="row">{{napr.napr_id}}</th>
         <td><a href="{{ url_for('napravlenie', napr_id=napr.napr_id) }}">{{ napr.napr_name }}</a></td>
         <td>{{ napr.abit_mesto }}</td>
