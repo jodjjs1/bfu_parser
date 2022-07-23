@@ -9,5 +9,3 @@ def chek_snils_validator(form, field):
 class SnilsForm(FlaskForm):
     snils = StringField('Снилс:', description='000-000-000 00' , validators=[InputRequired(), chek_snils_validator]) # написать валидатор
     submit = SubmitField('Искать')
-
-    

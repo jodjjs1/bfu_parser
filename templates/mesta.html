@@ -8,7 +8,6 @@
 
 {% block content %}
 <div class=data>
-
   <table class="table table-striped">
     <thead>
       <tr>
@@ -20,8 +19,8 @@
         <th scope="col">Низший балл согласия</th>
       </tr>
     </thead>
+
     <tbody>
-      
     {% for napr in mesta %}
       {% if napr.your_sogl %}
       <tr class="table-primary">
@@ -41,8 +40,8 @@
       </tr>
     {% endfor %}
     </tbody>
+
   </table>
   <a href="{{ url_for('index') }}">Go Back</a>
 </div>
-
 {% endblock content %}

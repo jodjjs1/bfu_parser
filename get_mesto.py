@@ -5,13 +5,13 @@ from pathlib import Path
 # https://abitstat.kantiana.ru/api/applicants/get/
 
 #TODO: залить на сервер
-#TODO: отдельный кеш сервер, где хранятся данные 20м
+#TODO: кешировать мою выдачу
 class Napravleniya():
 
     def __init__(self):
-        
+        # getting data from cache
         self.konkurs = self.__read_cache('konkurs')
-        self.all_abits = self.__read_cache('all_abits') # получение данных из файла если нет интернета
+        self.all_abits = self.__read_cache('all_abits') 
         print('loading from cache')
 
     # ------ SETTERS ------
@@ -31,22 +31,19 @@ class Napravleniya():
         
         self.snils = right_snils
 
+
     # ------ GETTERS ------
-    def get_data(self):
-        data = {}
-        return data
-
-
     def get_mesto(self):
-
         napravleniya = []
         mesta = []
 
+        # find all user's napravleniya
         for abit in self.all_abits:
             if abit['FIO'] == self.snils:
                 number_of_napr = abit['Napravlenie'][:8]
                 napravleniya.append(number_of_napr)
 
+        # make output data with all I need
         for napr in self.konkurs:
             napr_name = napr['Napravlenie'][8:]
             napr_id = napr['Napravlenie'][:8]
@@ -70,6 +67,7 @@ class Napravleniya():
                             'lowest_sogl': lowest_sogl})
         return mesta
 
+
     # ---- PRIVAT FUCTIONS ----
     def __get_lowest_sogl(self, napr_id):
         ball = 0
@@ -79,7 +77,6 @@ class Napravleniya():
                     if abit['Soglasie']:
                         ball = abit['KonkursTotal']
         return ball
-
 
     def __get_sogl_mesto(self, napr_id):
         for napr in self.konkurs:
@@ -94,7 +91,6 @@ class Napravleniya():
                             return sogl_mesto
         return -1
 
-
     def __get_sogl_num(self, napr_id_fc:str) -> int:
         count = 0
         for napr in self.konkurs:
@@ -107,12 +103,12 @@ class Napravleniya():
         return count
 
     def __clear_abits(self, abits) -> list:
-            clear_data = []
-            for i in range(len(abits)-1):
-                if abits[i]['Finansirovanie'] == 'Бюджетная основа':
-                    clear_data.append(abits[i])
+        clear_data = []
+        for i in range(len(abits)-1):
+            if abits[i]['Finansirovanie'] == 'Бюджетная основа':
+                clear_data.append(abits[i])
 
-            return clear_data
+        return clear_data
 
     def __is_int_in_str(self, n:str) -> bool:
         numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
