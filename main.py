@@ -7,6 +7,7 @@ from forms import SnilsForm
 from get_mesto import Napravleniya
 
 from variables import secret_key
+# https://abitstat.kantiana.ru/rating/bak/01.03.02%20Прикладная%20математика%20и%20информатика%20(Очная)
 
 app = Flask(__name__)
 app.debug = True
