@@ -6,7 +6,6 @@ from pathlib import Path
 # https://abitstat.kantiana.ru/api/applicants/get/
 
 #TODO: место в списка за минусом тех, кто подал согласия на другие специальности
-#TODO: количество согласий
 #TODO: моё место среди подавших согласия
 #TODO: отображение где согласие
 #TODO: залить на сервер
@@ -62,18 +61,27 @@ class Napravleniya():
             napr_name = napr['Napravlenie'][8:]
             napr_id = napr['Napravlenie'][:8]
             if napr_id in napravleniya:
+                sogl_num = self.__get_sogl_num(napr_id)
                 abits = self.__clear_abits(napr['Abits'])
                 for abit in range(len(abits)):
                     if abits[abit]['Snils'] == self.snils:
                         abit_mesto = abit + 1
-                        mesta.append({'napr_id': napr_id, 'napr_name': napr_name, 'abit_mesto': abit_mesto})
+                        mesta.append({'napr_id': napr_id, 'napr_name': napr_name, 'abit_mesto': abit_mesto, 'sogl_num': sogl_num})
         return mesta
 
-    def get_napr(self):
-        return 0
-
     # ---- PRIVAT FUCTIONS ----
-    def __clear_abits(self, abits):
+    def __get_sogl_num(self, napr_id_fc:str) -> int:
+        count = 0
+        for napr in self.konkurs:
+            napr_id = napr['Napravlenie'][:8]
+            if napr_id == napr_id_fc:
+                abits = self.__clear_abits(napr['Abits'])
+                for abit in abits:
+                    if abit['Soglasie']:
+                        count += 1
+        return count
+
+    def __clear_abits(self, abits) -> list:
             clear_data = []
             for i in range(len(abits)-1):
                 if abits[i]['Finansirovanie'] == 'Бюджетная основа':

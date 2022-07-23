@@ -1,5 +1,6 @@
 from flask import Flask, redirect, render_template, url_for
 from flask import request
+from flask_caching import Cache
 
 from forms import SnilsForm
 
@@ -10,6 +11,8 @@ from variables import secret_key
 app = Flask(__name__)
 app.debug = True
 app.config['SECRET_KEY'] = secret_key # секрктный код в переменной окружения
+
+cache = Cache(app)
 
 @app.route('/', methods=['get', 'post'])
 def index():

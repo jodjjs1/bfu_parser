@@ -15,6 +15,7 @@
         <th scope="col">Номер</th>
         <th scope="col">Название специальности</th>
         <th scope="col">Место</th>
+        <th scope="col">Кол-во согласий</th>
       </tr>
     </thead>
     <tbody>
@@ -24,6 +25,7 @@
         <th scope="row">{{napr.napr_id}}</th>
         <td><a href="{{ url_for('napravlenie', napr_id=napr.napr_id) }}">{{ napr.napr_name }}</a></td>
         <td>{{ napr.abit_mesto }}</td>
+        <td>{{ napr.sogl_num }}</td>
       </tr>
     {% endfor %}
     </tbody>
