@@ -7,7 +7,6 @@ from pathlib import Path
 
 #TODO: место в списка за минусом тех, кто подал согласия на другие специальности
 #TODO: моё место среди подавших согласия
-#TODO: отображение где согласие
 #TODO: залить на сервер
 #TODO: ссылка на списки бфу по специальности
 #TODO: отдельный кеш сервер, где хранятся данные 20м
@@ -47,6 +46,11 @@ class Napravleniya():
         self.snils = right_snils
 
     # ------ GETTERS ------
+    def get_data(self):
+        data = {}
+        return data
+
+
     def get_mesto(self):
 
         napravleniya = []
@@ -62,21 +66,35 @@ class Napravleniya():
             napr_id = napr['Napravlenie'][:8]
             if napr_id in napravleniya:
                 sogl_num = self.__get_sogl_num(napr_id)
+                sogl_mesto = self.__get_sogl_mesto(napr_id)
+
                 abits = self.__clear_abits(napr['Abits'])
                 for abit in range(len(abits)):
                     if abits[abit]['Snils'] == self.snils:
                         abit_mesto = abit + 1
-                        mesta.append({'napr_id': napr_id, 
-                        'napr_name': napr_name, 
-                        'abit_mesto': abit_mesto, 
-                        'sogl_num': sogl_num,
-                        'your_sogl': abits[abit]['Soglasie']})
+
+                        mesta.append({
+                            'napr_id': napr_id, 
+                            'napr_name': napr_name, 
+                            'abit_mesto': abit_mesto, 
+                            'sogl_num': sogl_num,
+                            'your_sogl': abits[abit]['Soglasie'],
+                            'sogl_mesto': sogl_mesto})
         return mesta
 
     # ---- PRIVAT FUCTIONS ----
-    # def __is_your_sogl(self, napr:dict) -> bool:
-    #     if 
-
+    def __get_sogl_mesto(self, napr_id):
+        for napr in self.konkurs:
+            if napr['Napravlenie'][:8] == napr_id:
+                count = 0
+                abits = self.__clear_abits(napr['Abits'])
+                for abit in range(len(abits)):
+                    if abits[abit]['Soglasie']:
+                        count += 1
+                        if abits[abit]['Snils'] == self.snils:
+                            sogl_mesto = count
+                            return sogl_mesto
+        return -1
 
 
     def __get_sogl_num(self, napr_id_fc:str) -> int:

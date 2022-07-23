@@ -13,7 +13,7 @@ app = Flask(__name__)
 app.debug = True
 app.config['SECRET_KEY'] = secret_key # секрктный код в переменной окружения
 
-cache = Cache(app)
+# cache = Cache(app)
 
 @app.route('/', methods=['get', 'post'])
 def index():

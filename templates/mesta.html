@@ -16,6 +16,8 @@
         <th scope="col">Название специальности</th>
         <th scope="col">Место</th>
         <th scope="col">Кол-во согласий</th>
+        <th scope="col">Место среди согласий</th>
+
       </tr>
     </thead>
     <tbody>
@@ -30,6 +32,11 @@
         <td><a href="https://abitstat.kantiana.ru/rating/bak/{{ napr.napr_id }}{{ napr.napr_name }}" target="_blanke">{{ napr.napr_name }}</a></td>
         <td>{{ napr.abit_mesto }}</td>
         <td>{{ napr.sogl_num }}</td>
+        {% if napr.sogl_mesto != -1 %}
+        <td>{{ napr.sogl_mesto }}</td>
+        {% else %} 
+        <td></td>
+        {% endif %}
       </tr>
     {% endfor %}
     </tbody>
