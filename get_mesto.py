@@ -11,6 +11,7 @@ from pathlib import Path
 #TODO: отображение где согласие
 #TODO: залить на сервер
 #TODO: ссылка на списки бфу по специальности
+#TODO: отдельный кеш сервер, где хранятся данные 20м
 class Napravleniya():
 
     def __init__(self):
@@ -23,12 +24,11 @@ class Napravleniya():
             self.all_abits = requests.get(self.__URL_ALL).json()
             self.__make_cache(self.all_abits, 'all_abits')
 
-            #TODO: загрузка в файл полученых данных
+            print('loadin from web')
         except requests.exceptions.ConnectionError:
             self.konkurs = self.__read_cache('konkurs')
             self.all_abits = self.__read_cache('all_abits') # получение данных из файла если нет интернета
-
-        self.snils = ''
+            print('loading from cache')
 
     # ------ SETTERS ------
     def set_snils(self, snils):
