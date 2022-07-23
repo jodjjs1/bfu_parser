@@ -17,7 +17,7 @@
         <th scope="col">Место</th>
         <th scope="col">Кол-во согласий</th>
         <th scope="col">Место среди согласий</th>
-
+        <th scope="col">Низший балл согласия</th>
       </tr>
     </thead>
     <tbody>
@@ -37,6 +37,7 @@
         {% else %} 
         <td></td>
         {% endif %}
+        <td>{{ napr.lowest_sogl }}</td>
       </tr>
     {% endfor %}
     </tbody>

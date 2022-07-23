@@ -1,32 +1,18 @@
-from importlib.resources import path
 import requests
 import json
 from pathlib import Path
 # https://abitstat.kantiana.ru/static/rating_bak.json
 # https://abitstat.kantiana.ru/api/applicants/get/
 
-#TODO: место в списка за минусом тех, кто подал согласия на другие специальности
-#TODO: моё место среди подавших согласия
 #TODO: залить на сервер
-#TODO: ссылка на списки бфу по специальности
 #TODO: отдельный кеш сервер, где хранятся данные 20м
 class Napravleniya():
 
     def __init__(self):
-        try:
-            self.__URL = 'https://abitstat.kantiana.ru/static/rating_bak.json'
-            self.konkurs = requests.get(self.__URL).json()
-            self.__make_cache(self.konkurs, 'konkurs')
-
-            self.__URL_ALL = 'https://abitstat.kantiana.ru/api/applicants/get/'
-            self.all_abits = requests.get(self.__URL_ALL).json()
-            self.__make_cache(self.all_abits, 'all_abits')
-
-            print('loadin from web')
-        except requests.exceptions.ConnectionError:
-            self.konkurs = self.__read_cache('konkurs')
-            self.all_abits = self.__read_cache('all_abits') # получение данных из файла если нет интернета
-            print('loading from cache')
+        
+        self.konkurs = self.__read_cache('konkurs')
+        self.all_abits = self.__read_cache('all_abits') # получение данных из файла если нет интернета
+        print('loading from cache')
 
     # ------ SETTERS ------
     def set_snils(self, snils):
@@ -67,6 +53,7 @@ class Napravleniya():
             if napr_id in napravleniya:
                 sogl_num = self.__get_sogl_num(napr_id)
                 sogl_mesto = self.__get_sogl_mesto(napr_id)
+                lowest_sogl = self.__get_lowest_sogl(napr_id)
 
                 abits = self.__clear_abits(napr['Abits'])
                 for abit in range(len(abits)):
@@ -79,10 +66,21 @@ class Napravleniya():
                             'abit_mesto': abit_mesto, 
                             'sogl_num': sogl_num,
                             'your_sogl': abits[abit]['Soglasie'],
-                            'sogl_mesto': sogl_mesto})
+                            'sogl_mesto': sogl_mesto,
+                            'lowest_sogl': lowest_sogl})
         return mesta
 
     # ---- PRIVAT FUCTIONS ----
+    def __get_lowest_sogl(self, napr_id):
+        ball = 0
+        for napr in self.konkurs:
+            if napr['Napravlenie'][:8] == napr_id:
+                for abit in napr['Abits']:
+                    if abit['Soglasie']:
+                        ball = abit['KonkursTotal']
+        return ball
+
+
     def __get_sogl_mesto(self, napr_id):
         for napr in self.konkurs:
             if napr['Napravlenie'][:8] == napr_id:

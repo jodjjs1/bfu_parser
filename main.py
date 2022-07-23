@@ -2,9 +2,13 @@ from flask import Flask, redirect, render_template, url_for
 from flask import request
 from flask_caching import Cache
 
+from threading import Thread
+from cache import Get_data
+
 from forms import SnilsForm
 
 from get_mesto import Napravleniya
+
 
 from variables import secret_key
 # https://abitstat.kantiana.ru/rating/bak/01.03.02%20Прикладная%20математика%20и%20информатика%20(Очная)
@@ -43,4 +47,6 @@ def napravlenie(napr_id):
     return render_template('napr.html', napr=napr)
 
 if __name__ == "__main__":
+    cache_th = Thread(target=Get_data)
+    cache_th.start()
     app.run()
