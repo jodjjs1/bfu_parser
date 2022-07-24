@@ -10,9 +10,11 @@ class Napravleniya():
 
     def __init__(self):
         # getting data from cache
-        self.konkurs = self.__read_cache('konkurs')
-        self.all_abits = self.__read_cache('all_abits') 
-        print('loading from cache')
+        try:
+            self.konkurs = self.__read_cache('konkurs')
+            self.all_abits = self.__read_cache('all_abits') 
+        except FileNotFoundError:
+            pass
 
     # ------ SETTERS ------
     def set_snils(self, snils):
