@@ -4,13 +4,13 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='main_page.css')}}">
 {% endblock head %}
 
-{% block title%}Enter your snils{% endblock %}
+{% block title%}Узнать место{% endblock %}
 
 {% block content%}
   <div class="form">
-    <h2 align="center">Enter your snils</h2>
+    <h2>Введите снилс</h2>
 
-    <form action="" align=center method="post">
+    <form action="" method="post">
       {{ form.csrf_token() }}
   
       {{ form.snils() }}
@@ -22,5 +22,11 @@
       <input class="btn btn-outline-primary" type="submit" value="Искать">
       
     </form>
+
+    <div class="safeText">
+      <p>Сайт не сохраняет ваши личные данные! <br>
+      Вся информация о абитуриентов взята с сайта <a href="https://abitstat.kantiana.ru">abitstat.kantiana.ru</a></p>
+    </div>
+
   </div>
 {% endblock %}
