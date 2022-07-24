@@ -35,4 +35,4 @@ def your_place():
 if __name__ == "__main__":
     cache_th = Thread(target=Get_data)
     cache_th.start()
-    app.run()
+    app.run(host='0.0.0.0')
