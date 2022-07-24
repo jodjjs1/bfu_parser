@@ -2,11 +2,15 @@ import requests
 import json
 from pathlib import Path
 import time
+import os
 
 URL_K = 'https://abitstat.kantiana.ru/static/rating_bak.json'
 URL_ALL = 'https://abitstat.kantiana.ru/api/applicants/get/'
 
 def Get_data():
+    path = Path('cache')
+    if not os.path.exists(path):
+        os.mkdir('cache')
     while True:
         try:
             konkurs = requests.get(URL_K).json()
