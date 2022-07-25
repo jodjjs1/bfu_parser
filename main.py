@@ -9,7 +9,7 @@ from get_mesto import Napravleniya
 from variables import secret_key
 
 app = Flask(__name__)
-app.debug = True
+app.debug = False
 app.config['SECRET_KEY'] = secret_key # секрктный код в переменной окружения
 
 @app.route('/', methods=['get', 'post'])
